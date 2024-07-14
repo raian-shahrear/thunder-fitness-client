@@ -1,7 +1,13 @@
+import HomeCategory from "./HomeCategory";
+import HomeFeaturedProducts from "./HomeFeaturedProducts";
+import HomeHero from "./HomeHero";
+
 const Home = () => {
   return (
-    <div className="container mx-auto px-4 lg:px-10 xxl:px-0">
-      welcome to thunder fitness
+    <div >
+      <HomeHero />
+      <HomeCategory />
+      <HomeFeaturedProducts />
     </div>
   );
 };
