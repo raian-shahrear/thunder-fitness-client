@@ -1,5 +1,11 @@
+import React from 'react';
+
 const Cart = () => {
-  return <div>This is cart page where ordered item will be displayed</div>;
+  return (
+    <div>
+      
+    </div>
+  );
 };
 
 export default Cart;

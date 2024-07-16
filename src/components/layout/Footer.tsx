@@ -77,7 +77,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="border-t-2 border-gray-700 text-center py-6 mt-10">
+      <div className="border-t border-gray-700 text-center py-6 mt-10">
         <p className="text-gray-400 text-sm">
           Copyright &copy; 2024, Thunder Fitness
         </p>

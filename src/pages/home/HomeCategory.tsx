@@ -1,13 +1,10 @@
 const HomeCategory = () => {
   return (
     <section className="container mx-auto px-4 lg:px-10 xxl:px-0 mb-20">
-      <h2 className="text-center text-2xl font-bold text-gray-900 mb-10">
-        Categories
-      </h2>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         <div>
           <img
-            src="../../../src/assets/home/categories/Cardio Equipment.jpg"
+            src="../../../src/assets/home/categories/Cardio Equipment/Ellipticals.jpg"
             alt="category"
             className="w-full object-cover object-center"
           />
@@ -17,7 +14,7 @@ const HomeCategory = () => {
         </div>
         <div>
           <img
-            src="../../../src/assets/home/categories/Strength Training.jpg"
+            src="../../../src/assets/home/categories/Functional Fitness/Battle Ropes.jpg"
             alt="category"
             className="w-full object-cover object-center"
           />
@@ -27,7 +24,7 @@ const HomeCategory = () => {
         </div>
         <div>
           <img
-            src="../../../src/assets/home/categories/Functional Fitness.jpg"
+            src="../../../src/assets/home/categories/Heavy Machine/Leg Press Machines.jpg"
             alt="category"
             className="w-full object-cover object-center"
           />
@@ -37,7 +34,7 @@ const HomeCategory = () => {
         </div>
         <div>
           <img
-            src="../../../src/assets/home/categories/Heavy Machine.jpg"
+            src="../../../src/assets/home/categories/Storage Solutions/Weight Racks.jpg"
             alt="category"
             className="w-full object-cover object-center"
           />
@@ -47,7 +44,7 @@ const HomeCategory = () => {
         </div>
         <div>
           <img
-            src="../../../src/assets/home/categories/Storage Solutions.jpg"
+            src="../../../src/assets/home/categories/Strength Training/Barbells and Plates.jpg"
             alt="category"
             className="w-full object-cover object-center"
           />
