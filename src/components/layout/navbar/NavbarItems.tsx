@@ -60,16 +60,17 @@ const NavbarItems = () => {
           About Us
         </NavLink>
       </li>
-      <li>
+      <li className="hidden lg:block">
         <Link
           to="/cart"
           aria-label="Cart"
           title="Cart"
-          className="font-medium tracking-wide text-red-700 lg:text-red-300 transition-all duration-300 hover:text-secondary"
+          className="font-medium tracking-wide text-red-300 transition-all duration-300 hover:text-secondary relative"
         >
           <span className="text-xl">
             <IoIosCart />
           </span>
+          <span className="bg-red-700 w-[19px] h-[19px] text-[9px] text-white flex justify-center items-center rounded-full absolute top-[-10px] right-[-8px]">99+</span>
         </Link>
       </li>
     </>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "../../components/ui/button";
 import { TiPlus, TiMinus } from "react-icons/ti";
 import { IoIosCart } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const ProductDetails = () => {
   const [quantityCount, setQuantityCount] = useState(0);
@@ -49,13 +50,21 @@ const ProductDetails = () => {
               </Button>
             </div>
           </div>
-          <div className="mt-8">
-            <Button>
-              <span className="text-xl mr-2">
-                <IoIosCart />
+          <div className="mt-8 flex items-center gap-3">
+            <Button className="h-fit py-2 px-2 rounded">
+              <span className="text-lg mr-2">
+                <TiPlus />
               </span>
               Add to cart
             </Button>
+            <Link to="/cart">
+              <Button className="bg-red-300 text-gray-900 h-fit py-2 px-2 rounded transition-all duration-300 hover:bg-gray-900 hover:text-white">
+                <span className="text-lg mr-2">
+                  <IoIosCart />
+                </span>
+                Visit cart
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
