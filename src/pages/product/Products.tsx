@@ -85,7 +85,7 @@ const Products = () => {
           </div>
           <Button
             type="reset"
-            className="py-2jkjhg h-auto w-24 h-fit rounded-sm"
+            className="py-2jkjhg h-auto w-24 h-fit rounded"
             onClick={handleAllFilterToReset}
           >
             <FaArrowRotateLeft /> <span className="ml-2">Reset</span>
@@ -108,7 +108,7 @@ const Products = () => {
               <p className="font-semibold text-3xl mb-4">
                 $ <span>400</span>
               </p>
-              <Button className="py-1 px-2 h-auto bg-gray-900">
+              <Button className="py-1 px-2 h-auto bg-gray-900 rounded">
                 <Link to="/products/1">View Details</Link>
               </Button>
             </div>
@@ -127,7 +127,7 @@ const Products = () => {
               <p className="font-semibold text-3xl mb-4">
                 $ <span>360</span>
               </p>
-              <Button className="py-1 px-2 h-auto bg-gray-900">
+              <Button className="py-1 px-2 h-auto bg-gray-900 rounded">
                 <Link to="/products/1">View Details</Link>
               </Button>
             </div>
@@ -146,7 +146,7 @@ const Products = () => {
               <p className="font-semibold text-3xl mb-4">
                 $ <span>120</span>
               </p>
-              <Button className="py-1 px-2 h-auto bg-gray-900">
+              <Button className="py-1 px-2 h-auto bg-gray-900 rounded">
                 <Link to="/products/1">View Details</Link>
               </Button>
             </div>

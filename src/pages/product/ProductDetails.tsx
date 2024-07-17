@@ -31,7 +31,7 @@ const ProductDetails = () => {
             <span className="font-semibold mb-2 block">Quantity:</span>
             <div className="flex gap-2">
               <Button
-                className="px-2 py-2 h-fit"
+                className="px-2 py-2 h-fit rounded"
                 onClick={() => setQuantityCount(quantityCount - 1)}
               >
                 <TiMinus />
@@ -40,10 +40,10 @@ const ProductDetails = () => {
                 type="number"
                 name="quantity"
                 value={quantityCount}
-                className="border border-gray-300 w-12 px-2 py-1 text-sm rounded-sm placeholder:text-black outline-none"
+                className="border border-gray-300 w-12 px-2 py-1 text-sm rounded placeholder:text-black outline-none"
               />
               <Button
-                className="px-2 py-2 h-fit"
+                className="px-2 py-2 h-fit rounded"
                 onClick={() => setQuantityCount(quantityCount + 1)}
               >
                 <TiPlus />

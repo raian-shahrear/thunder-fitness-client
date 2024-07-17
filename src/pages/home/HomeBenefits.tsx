@@ -8,7 +8,7 @@ const HomeBenefits = () => {
           <img
             src="../../../src/assets/home/benefits.jpg"
             alt="benefits"
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover object-center rounded-md"
           />
         </div>
         <div>

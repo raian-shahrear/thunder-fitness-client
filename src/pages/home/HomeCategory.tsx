@@ -6,7 +6,7 @@ const HomeCategory = () => {
           <img
             src="../../../src/assets/home/categories/Cardio Equipment/Ellipticals.jpg"
             alt="category"
-            className="w-full object-cover object-center"
+            className="w-full object-cover object-center rounded-md"
           />
           <p className="font-semibold text-lg mt-3 text-center">
             Cardio Equipment
@@ -16,7 +16,7 @@ const HomeCategory = () => {
           <img
             src="../../../src/assets/home/categories/Functional Fitness/Battle Ropes.jpg"
             alt="category"
-            className="w-full object-cover object-center"
+            className="w-full object-cover object-center rounded-md"
           />
           <p className="font-semibold text-lg mt-3 text-center">
             Strength Training
@@ -26,7 +26,7 @@ const HomeCategory = () => {
           <img
             src="../../../src/assets/home/categories/Heavy Machine/Leg Press Machines.jpg"
             alt="category"
-            className="w-full object-cover object-center"
+            className="w-full object-cover object-center rounded-md"
           />
           <p className="font-semibold text-lg mt-3 text-center">
             Functional Fitness
@@ -36,7 +36,7 @@ const HomeCategory = () => {
           <img
             src="../../../src/assets/home/categories/Storage Solutions/Weight Racks.jpg"
             alt="category"
-            className="w-full object-cover object-center"
+            className="w-full object-cover object-center rounded-md"
           />
           <p className="font-semibold text-lg mt-3 text-center">
             Heavy Machine
@@ -46,7 +46,7 @@ const HomeCategory = () => {
           <img
             src="../../../src/assets/home/categories/Strength Training/Barbells and Plates.jpg"
             alt="category"
-            className="w-full object-cover object-center"
+            className="w-full object-cover object-center rounded-md"
           />
           <p className="font-semibold text-lg mt-3 text-center">
             Storage Solutions

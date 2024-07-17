@@ -61,13 +61,12 @@ const Cart = () => {
     return total + quantities[idx] * product.unitPrice;
   }, 0);
 
-const handleDeleteItem = (item: Record<string, unknown>) =>{
-  const isConfirmed = confirm("Are you sure to delete?");
-  if(isConfirmed){
-    console.log(item)
-  }
-}
-
+  const handleDeleteItem = (item: Record<string, unknown>) => {
+    const isConfirmed = confirm("Are you sure to delete?");
+    if (isConfirmed) {
+      console.log(item);
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-20 lg:pt-32 min-h-[65vh] mb-10">
@@ -95,7 +94,7 @@ const handleDeleteItem = (item: Record<string, unknown>) =>{
                 <TableCell className="">
                   <div className="flex gap-2">
                     <Button
-                      className="px-1 py-2 h-fit"
+                      className="px-1 py-2 h-fit rounded"
                       onClick={() =>
                         handleQuantityChange(product._id, quantities[idx] - 1)
                       }
@@ -115,7 +114,7 @@ const handleDeleteItem = (item: Record<string, unknown>) =>{
                       }
                     />
                     <Button
-                      className="px-1 py-2 h-fit"
+                      className="px-1 py-2 h-fit rounded"
                       onClick={() =>
                         handleQuantityChange(product._id, quantities[idx] + 1)
                       }
@@ -129,7 +128,10 @@ const handleDeleteItem = (item: Record<string, unknown>) =>{
                 </TableCell>
                 <TableCell>
                   <div>
-                    <Button className="px-1 py-2 h-fit bg-red-700" onClick={()=>handleDeleteItem(product)}>
+                    <Button
+                      className="px-1 py-2 h-fit bg-red-700 rounded"
+                      onClick={() => handleDeleteItem(product)}
+                    >
                       <RiDeleteBin5Line />
                     </Button>
                   </div>
