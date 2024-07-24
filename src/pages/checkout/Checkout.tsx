@@ -18,9 +18,10 @@ const Checkout = () => {
         {
           product: "",
           quantity: 5,
+          productPrice: '5 * unitPrice',
         },
       ],
-      paid: true,
+      totalCost: 6745675875876586,
       paymentMethod: form.payment.value,
     };
 
