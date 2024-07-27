@@ -10,9 +10,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../../components/ui/dialog";
-import { FormEvent, useReducer } from "react";
+import { FormEvent, useEffect, useReducer, useState } from "react";
 import { getImageUrl } from "../../utils/getImageUrl";
 import { useAddCategoryMutation } from "../../redux/api/categoryApi";
+import Loading from "../../utils/Loading";
+import { toast } from "sonner";
 
 type TInitialState = {
   categoryName: string;
@@ -41,22 +43,35 @@ const reducer = (currentState: TInitialState, action: TAction) => {
 const AddCategory = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [addCategory, { isLoading }] = useAddCategoryMutation();
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    state.categoryImage &&
+    state.categoryName
+      ? setIsFormValid(true)
+      : setIsFormValid(false);
+  }, [state]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    // getImageUrl(state.categoryImage).then((imageUrl) => {});
+    getImageUrl(state.categoryImage).then((imageUrl) => {
+      const newCategory = {
+        name: state.categoryName,
+        image: imageUrl,
+      };
 
-    const newCategory = {
-      name: state.categoryName,
-      image: "imageUrl",
-    };
+      addCategory(newCategory);
+      toast.success("Category has been added!");
 
-    addCategory(newCategory);
+      state.categoryName = "";
+      state.categoryImage = null;
+      setIsFormValid(false);
+    });
   };
 
   if (isLoading) {
-    return "Loading...";
+    return <Loading />;
   }
 
   return (
@@ -69,7 +84,7 @@ const AddCategory = () => {
           <span>Add Category</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] lg:max-w-[550px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Add Category</DialogTitle>
@@ -110,7 +125,7 @@ const AddCategory = () => {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="submit">Submit</Button>
+              <Button type="submit" disabled={!isFormValid}>Submit</Button>
             </DialogClose>
           </DialogFooter>
         </form>

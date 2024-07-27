@@ -1,3 +1,12 @@
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaPinterestP,
+  FaTiktok,
+  FaTwitter,
+} from "react-icons/fa";
+import { HiOutlinePhone } from "react-icons/hi2";
+import { MdOutlineMail } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -17,7 +26,8 @@ const Footer = () => {
               </span>
             </a>
             <p className="mt-3">
-              We offer best product where quality is our main concern
+              Experience top-tier fitness equipment where quality and innovation
+              meet to elevate your workout.
             </p>
           </div>
           <div>
@@ -70,8 +80,58 @@ const Footer = () => {
           <div>
             <p className="text-lg mb-3 font-semibold">Contact Us</p>
             <div>
-              <p>Email: contact@thunder.com</p>
-              <p>Phone: +0193474032</p>
+              <p className="flex items-center gap-2">
+                <span>
+                  <MdOutlineMail />
+                </span>
+                <span>contact@thunder.com</span>
+              </p>
+              <p className="flex items-center gap-2">
+                <span>
+                  <HiOutlinePhone />
+                </span>
+                <span>+01293474032</span>
+              </p>
+              <div className="mt-4">
+                <p className="font-semibold mb-2">Social</p>
+                <div className="flex items-center gap-3">
+                  <a
+                    href="/"
+                    target="_blank"
+                    className="text-white transition-all duration-300 hover:text-blue-600"
+                  >
+                    <FaFacebookF />
+                  </a>
+                  <a
+                    href="/"
+                    target="_blank"
+                    className="text-white transition-all duration-300 hover:text-fuchsia-600"
+                  >
+                    <FaInstagram />
+                  </a>
+                  <a
+                    href="/"
+                    target="_blank"
+                    className="text-white transition-all duration-300 hover:text-red-600"
+                  >
+                    <FaPinterestP />
+                  </a>
+                  <a
+                    href="/"
+                    target="_blank"
+                    className="text-white transition-all duration-300 hover:text-violet-600"
+                  >
+                    <FaTiktok />
+                  </a>
+                  <a
+                    href="/"
+                    target="_blank"
+                    className="text-white transition-all duration-300 hover:text-cyan-600"
+                  >
+                    <FaTwitter />
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

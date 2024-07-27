@@ -5,13 +5,16 @@ import Select from "react-select";
 import { FaArrowRotateLeft } from "react-icons/fa6";
 import { useGetAllProductsQuery } from "../../redux/api/productApi";
 import { useGetAllCategoriesQuery } from "../../redux/api/categoryApi";
+import defaultImage from "../../assets/default_image.jpg";
+import Loading from "../../utils/Loading";
 
 const Products = () => {
   const navigate = useNavigate();
   const { state: selectedCategory } = useLocation();
+
+  // show category for select
   const { data: categoryData, isLoading: isLoadingCategory } =
     useGetAllCategoriesQuery(undefined);
-
   const categoryOptions = categoryData?.data?.map((option) => ({
     value: option?._id,
     label: option?.name,
@@ -66,7 +69,7 @@ const Products = () => {
   };
 
   if (isLoading || isLoadingCategory) {
-    return "Loading...";
+    return <Loading />;
   }
 
   return (
@@ -142,7 +145,7 @@ const Products = () => {
                 <div key={product?._id} className="grid grid-cols-2 gap-6">
                   <div>
                     <img
-                      src={product?.image}
+                      src={product?.image ? product?.image : defaultImage}
                       alt="gym product"
                       className="w-full h-full object-cover object-center"
                     />

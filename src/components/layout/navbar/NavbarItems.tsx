@@ -1,7 +1,13 @@
 import { IoIosCart } from "react-icons/io";
 import { Link, NavLink } from "react-router-dom";
+import { useAppSelector } from "../../../redux/hooks";
+import { RootState } from "../../../redux/store";
 
 const NavbarItems = () => {
+  const { orderedProducts } = useAppSelector(
+    (state: RootState) => state.cartProducts
+  );
+  
   return (
     <>
       <li>
@@ -70,7 +76,9 @@ const NavbarItems = () => {
           <span className="text-xl">
             <IoIosCart />
           </span>
-          <span className="bg-red-700 w-[19px] h-[19px] text-[9px] text-white flex justify-center items-center rounded-full absolute top-[-10px] right-[-8px]">99+</span>
+          <span className="bg-red-700 w-[19px] h-[19px] text-[9px] text-white flex justify-center items-center rounded-full absolute top-[-10px] right-[-8px]">
+            {orderedProducts?.length ? orderedProducts?.length > 99 ? '99+' : orderedProducts?.length : 0}
+          </span>
         </Link>
       </li>
     </>

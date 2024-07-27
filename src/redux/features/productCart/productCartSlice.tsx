@@ -45,8 +45,11 @@ export const productCartSlice = createSlice({
         isProductExist.quantity = action.payload.quantity;
       }
     },
+    clearProductCart: (state) => {
+      state.orderedProducts = []
+    },
   },
 });
 
-export const { addToCart, removeSingleProduct, updateQuantity } = productCartSlice.actions;
+export const { addToCart, removeSingleProduct, updateQuantity, clearProductCart } = productCartSlice.actions;
 export default productCartSlice.reducer;

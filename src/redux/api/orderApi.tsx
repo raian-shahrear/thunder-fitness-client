@@ -10,6 +10,7 @@ const orderApi = baseApi.injectEndpoints({
           body: data,
         };
       },
+      invalidatesTags: ["product"],
     }),
   }),
 });

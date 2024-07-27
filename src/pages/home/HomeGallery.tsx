@@ -1,7 +1,12 @@
 const HomeGallery = () => {
   return (
-    <section className="container mx-auto px-4 lg:px-10 xxl:px-0 mb-20">
-        <h2 className="text-center text-2xl font-bold text-gray-900 mb-10">
+    <section
+      className="container mx-auto px-4 lg:px-10 xxl:px-0 mb-20"
+      data-aos="fade-up"
+      data-aos-easing="ease-out-cubic"
+      data-aos-duration="1000"
+    >
+      <h2 className="text-center text-2xl font-bold text-gray-900 mb-10">
         Inspiring Moments
       </h2>
       <div className="-m-1 flex flex-wrap md:-m-2">

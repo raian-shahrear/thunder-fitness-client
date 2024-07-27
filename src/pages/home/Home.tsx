@@ -6,7 +6,7 @@ import HomeHero from "./HomeHero";
 
 const Home = () => {
   return (
-    <div >
+    <div>
       <HomeHero />
       <HomeCategory />
       <HomeFeaturedProducts />

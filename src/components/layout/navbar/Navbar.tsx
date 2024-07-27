@@ -2,9 +2,14 @@ import { useState } from "react";
 import NavbarItems from "./NavbarItems";
 import { Link } from "react-router-dom";
 import { IoIosCart } from "react-icons/io";
+import { useAppSelector } from "../../../redux/hooks";
+import { RootState } from "../../../redux/store";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { orderedProducts } = useAppSelector(
+    (state: RootState) => state.cartProducts
+  );
 
   return (
     <div className="bg-gray-900 lg:fixed lg:w-full lg:z-10">
@@ -35,7 +40,9 @@ const Navbar = () => {
                   <span className="text-xl">
                     <IoIosCart />
                   </span>
-                  <span className="bg-red-700 w-[19px] h-[19px] text-[9px] text-white flex justify-center items-center rounded-full absolute top-[-10px] right-[-8px]">99+</span>
+                  <span className="bg-red-700 w-[19px] h-[19px] text-[9px] text-white flex justify-center items-center rounded-full absolute top-[-10px] right-[-8px]">
+                  {orderedProducts?.length ? orderedProducts?.length > 99 ? '99+' : orderedProducts?.length : 0}
+                  </span>
                 </Link>
               </div>
               <button

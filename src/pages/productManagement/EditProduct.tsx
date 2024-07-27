@@ -13,6 +13,8 @@ import {
 import { FaEdit } from "react-icons/fa";
 import { getImageUrl } from "../../utils/getImageUrl";
 import { useUpdateProductMutation } from "../../redux/api/productApi";
+import Loading from "../../utils/Loading";
+import { toast } from "sonner";
 
 type TInitialState = {
   selectedCategory: string;
@@ -77,11 +79,12 @@ const EditProduct = ({ item, categoryData }) => {
       }
     };
 
-    updateProduct(newProduct);
+    await updateProduct(newProduct);
+    toast.success("Product has been edited.")
   };
 
   if (isLoading) {
-    return "Loading...";
+    return <Loading />;
   }
 
   return (
@@ -91,7 +94,7 @@ const EditProduct = ({ item, categoryData }) => {
           <FaEdit />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] lg:max-w-[550px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Edit Product</DialogTitle>

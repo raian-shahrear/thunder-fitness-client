@@ -1,33 +1,74 @@
-import { FormEvent } from "react";
+import { FormEvent, useEffect } from "react";
 import { Button } from "../../components/ui/button";
 import { MdShoppingCartCheckout } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { RootState } from "../../redux/store";
+import { usePlaceOrderMutation } from "../../redux/api/orderApi";
+import { clearProductCart } from "../../redux/features/productCart/productCartSlice";
+import { toast } from "sonner";
+import Loading from "../../utils/Loading";
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const reduxDispatch = useAppDispatch();
+  const { orderedProducts } = useAppSelector(
+    (state: RootState) => state.cartProducts
+  );
+  const [placeOrder, { isLoading }] = usePlaceOrderMutation();
+
+  const orderList =
+    orderedProducts && orderedProducts.length > 0
+      ? orderedProducts.map((item) => ({
+          product: item.productId,
+          quantity: item.quantity,
+          productCost: item.quantity * item.unitPrice!,
+        }))
+      : [];
+  // total all product cost
+  const grandTotal =
+    orderedProducts && orderedProducts.length > 0
+      ? orderList.reduce((total, item) => {
+          return total + item.productCost;
+        }, 0)
+      : 0;
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const form = e.target;
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
 
-    const newOrder = {
-      customerName: form.name.value,
-      customerEmail: form.email.value,
-      customerPhone: form.phone.value,
-      deliveryAddress: form.address.value,
-      orderedProducts: [
-        {
-          product: "",
-          quantity: 5,
-          productPrice: '5 * unitPrice',
-        },
-      ],
-      totalCost: 6745675875876586,
-      paymentMethod: form.payment.value,
-    };
-
-    console.log(newOrder);
-    navigate("/checkout-successful");
+    if (orderedProducts && orderedProducts.length > 0) {
+      const isConfirmed = confirm("Are you sure to place the order?");
+      if (isConfirmed) {
+        const newOrder = {
+          customerName: formData.get("name") as string,
+          customerEmail: formData.get("email") as string,
+          customerPhone: formData.get("phone") as string,
+          deliveryAddress: formData.get("address") as string,
+          orderedProducts: orderList,
+          totalCost: grandTotal,
+          paymentMethod: formData.get("payment") as string,
+        };
+        placeOrder(newOrder);
+        navigate("/checkout-successful", { replace: true });
+        reduxDispatch(clearProductCart());
+        toast.success("Order has been placed.");
+      }
+    }
   };
+
+  // Prevent navigating back to the checkout page
+  useEffect(() => {
+    if (window.history.state && window.history.state.idx > 0) {
+      window.history.replaceState({}, "");
+    }
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-20 lg:pt-32 min-h-[65vh] mb-10">
       <div className="flex justify-center items-center min-h-[65vh]">

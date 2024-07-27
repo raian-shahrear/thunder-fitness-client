@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useGetAllCategoriesQuery } from "../../redux/api/categoryApi";
+import defaultImage from "../../assets/default_image.jpg";
+import Loading from "../../utils/Loading";
 
 const HomeCategory = () => {
   const navigate = useNavigate();
@@ -10,7 +12,7 @@ const HomeCategory = () => {
   };
 
   if (isLoading) {
-    return "Loading...";
+    return <Loading />;
   }
 
   return (
@@ -22,7 +24,7 @@ const HomeCategory = () => {
               <div key={category?._id}>
                 <button onClick={() => handleDetails(category)}>
                   <img
-                    src={category?.image}
+                    src={category?.image ? category?.image : defaultImage}
                     alt="category"
                     className="w-full object-cover object-center rounded-md"
                   />

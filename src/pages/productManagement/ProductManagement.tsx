@@ -17,6 +17,9 @@ import {
 } from "../../redux/api/productApi";
 import { useGetAllCategoriesQuery } from "../../redux/api/categoryApi";
 import AddCategory from "./AddCategory";
+import { toast } from "sonner";
+import defaultImage from "../../assets/default_image.jpg";
+import Loading from "../../utils/Loading";
 
 const ProductManagement = () => {
   const { data: productData, isLoading } = useGetAllProductsQuery(undefined);
@@ -30,6 +33,7 @@ const ProductManagement = () => {
     const isConfirmed = confirm("Are you sure to delete?");
     if (isConfirmed) {
       removeProduct(item._id);
+      toast.warning("Product has been deleted!");
     }
   };
 
@@ -43,14 +47,17 @@ const ProductManagement = () => {
     };
 
     updateProduct(newProduct);
+    checked
+      ? toast.success("Product has been added as a featured item.")
+      : toast.success("Removed from featured product group.");
   };
 
   if (isLoading || isLoadingCategory || isUpdating) {
-    return "Loading...";
+    return <Loading />;
   }
   return (
-    <div className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-20 lg:pt-32 min-h-[65vh] mb-10">
-      <section className="mb-6">
+    <div className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-20 lg:pt-32 min-h-[65vh] mb-20">
+      <section>
         <div className="md:flex justify-between mb-10">
           <h2 className="text-2xl font-bold text-gray-900 text-center md:text-left mb-6 md:mb-0">
             Product Cart
@@ -75,13 +82,13 @@ const ProductManagement = () => {
           </TableHeader>
           {productData?.data?.length ? (
             <TableBody>
-              {productData?.data?.map((product, idx) => (
+              {productData?.data?.map((product, idx: number) => (
                 <TableRow key={product._id}>
                   <TableCell className="font-medium">{idx + 1}</TableCell>
                   <TableCell>
                     <div>
                       <img
-                        src={product?.image}
+                        src={product?.image ? product?.image : defaultImage}
                         alt="product"
                         className="w-full h-20 object-cover object-center rounded"
                       />
@@ -93,14 +100,27 @@ const ProductManagement = () => {
                   <TableCell>{product?.stock}</TableCell>
                   <TableCell>
                     <div>
-                      <input
-                        type="checkbox"
-                        name="featured_product"
-                        checked={product?.isFeaturedProduct}
-                        onChange={(e) =>
-                          handleFeaturedProduct(e.target.checked, product._id)
-                        }
-                      />
+                      <label
+                        htmlFor={`featured_product_${idx}`}
+                        className="inline-flex items-center space-x-4 cursor-pointer"
+                      >
+                        <span className="relative">
+                          <input
+                            id={`featured_product_${idx}`}
+                            type="checkbox"
+                            className="hidden peer"
+                            checked={product?.isFeaturedProduct}
+                            onChange={(e) =>
+                              handleFeaturedProduct(
+                                e.target.checked,
+                                product._id
+                              )
+                            }
+                          />
+                          <div className="w-12 h-6 rounded-full shadow-inner bg-gray-300 peer-checked:bg-gray-900"></div>
+                          <div className="absolute inset-y-0 left-0 w-4 h-4 m-1 rounded-full shadow peer-checked:right-0 peer-checked:left-auto bg-gray-100"></div>
+                        </span>
+                      </label>
                     </div>
                   </TableCell>
                   <TableCell>

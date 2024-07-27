@@ -13,6 +13,8 @@ import {
 import { FormEvent, useEffect, useReducer, useState } from "react";
 import { getImageUrl } from "../../utils/getImageUrl";
 import { useAddProductMutation } from "../../redux/api/productApi";
+import { toast } from "sonner";
+import Loading from "../../utils/Loading";
 
 type TInitialState = {
   selectedCategory: string;
@@ -54,7 +56,7 @@ const reducer = (currentState: TInitialState, action: TAction) => {
   }
 };
 
-const AddProduct = ({categoryData}) => {
+const AddProduct = ({ categoryData }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isFormValid, setIsFormValid] = useState(false);
   const [addProduct, { isLoading }] = useAddProductMutation();
@@ -73,22 +75,30 @@ const AddProduct = ({categoryData}) => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    // getImageUrl(state.productImage).then((imageUrl) => {
-    // });
-    const newProduct = {
-      category: state.selectedCategory,
-      name: state.productName,
-      description: state.productDescription,
-      price: parseFloat(state.productPrice),
-      stock: parseInt(state.productStock),
-      image: "imageUrl",
-    };
-    console.log(newProduct);
-    addProduct(newProduct);
+    getImageUrl(state.productImage).then((imageUrl) => {
+      const newProduct = {
+        category: state.selectedCategory,
+        name: state.productName,
+        description: state.productDescription,
+        price: parseFloat(state.productPrice),
+        stock: parseInt(state.productStock),
+        image: imageUrl,
+      };
+      addProduct(newProduct);
+      toast.success("Product has been added.");
+
+      state.selectedCategory = "";
+      state.productName = "";
+      state.productPrice = "";
+      state.productStock = "";
+      state.productDescription = "";
+      state.productImage = null;
+      setIsFormValid(false);
+    });
   };
 
   if (isLoading) {
-    return "Loading...";
+    return <Loading />;
   }
 
   return (
@@ -101,7 +111,7 @@ const AddProduct = ({categoryData}) => {
           <span>Add Product</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] lg:max-w-[550px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Add Product</DialogTitle>

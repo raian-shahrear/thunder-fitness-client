@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/ui/button";
 import { useGetAllProductsQuery } from "../../redux/api/productApi";
 import { FaArrowRight } from "react-icons/fa6";
+import defaultImage from "../../assets/default_image.jpg";
+import Loading from "../../utils/Loading";
 
 const HomeFeaturedProducts = () => {
   const navigate = useNavigate();
@@ -15,13 +17,18 @@ const HomeFeaturedProducts = () => {
   };
 
   if (isLoading) {
-    return "Loading...";
+    return <Loading />;
   }
 
   return (
     <>
       {featuredProductData?.length && (
-        <section className="container mx-auto px-4 lg:px-10 xxl:px-0 mb-20">
+        <section
+          className="container mx-auto px-4 lg:px-10 xxl:px-0 mb-20"
+          data-aos="fade-up"
+          data-aos-easing="ease-out-cubic"
+          data-aos-duration="1000"
+        >
           <h2 className="text-center text-2xl font-bold text-gray-900 mb-10">
             Our Best Sellers
           </h2>
@@ -33,7 +40,7 @@ const HomeFeaturedProducts = () => {
               >
                 <div>
                   <img
-                    src={product?.image}
+                    src={product?.image ? product?.image : defaultImage}
                     alt="featured product"
                     className="w-full h-60 object-cover object-center rounded-tl-md rounded-tr-md"
                   />

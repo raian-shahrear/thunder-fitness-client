@@ -2,7 +2,12 @@ import { CgGym } from "react-icons/cg";
 
 const HomeBenefits = () => {
   return (
-    <section className="container mx-auto px-4 lg:px-10 xxl:px-0 mb-20">
+    <section
+      className="container mx-auto px-4 lg:px-10 xxl:px-0 mb-20"
+      data-aos="fade-up"
+      data-aos-easing="ease-out-cubic"
+      data-aos-duration="1000"
+    >
       <div className="grid md:grid-cols-2 gap-x-10 gap-y-6">
         <div>
           <img
