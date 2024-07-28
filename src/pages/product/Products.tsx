@@ -8,6 +8,7 @@ import Loading from "../../utils/Loading";
 import { TCategory, TCategoryOption, TProduct } from "../../types";
 import ProductsFilter from "./ProductsFilter";
 import { productFilterFun } from "./product.utils";
+import useDebounce from "../../hooks/useDebounce";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -36,9 +37,12 @@ const Products = () => {
   const [filterByMaxPrice, setFilterByMaxPrice] = useState("");
   const [sortByPrice, setSortByPrice] = useState("");
 
+  // Use the debounce hook with a delay of 300ms
+  const debouncedSearch = useDebounce(search, 500);
+
   // get filter data from the utility
   const filterObj = productFilterFun(
-    search,
+    debouncedSearch,
     filterByCategory,
     filterByMinPrice,
     filterByMaxPrice,
