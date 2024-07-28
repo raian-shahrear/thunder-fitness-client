@@ -20,12 +20,17 @@ import AddCategory from "./AddCategory";
 import { toast } from "sonner";
 import defaultImage from "../../assets/default_image.jpg";
 import Loading from "../../utils/Loading";
+import { TProduct } from "../../types";
 
 const ProductManagement = () => {
+  // get all products
   const { data: productData, isLoading } = useGetAllProductsQuery(undefined);
+  // get all categories
   const { data: categoryData, isLoading: isLoadingCategory } =
     useGetAllCategoriesQuery(undefined);
+  // from redux to remove product
   const [removeProduct] = useRemoveProductMutation();
+  // from redux to update product's featured status
   const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
 
   // delete product
@@ -56,7 +61,7 @@ const ProductManagement = () => {
     return <Loading />;
   }
   return (
-    <div className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-20 lg:pt-32 min-h-[65vh] mb-20">
+    <div className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-20 lg:pt-32 min-h-[65vh] mb-10">
       <section>
         <div className="md:flex justify-between mb-10">
           <h2 className="text-2xl font-bold text-gray-900 text-center md:text-left mb-6 md:mb-0">
@@ -82,7 +87,7 @@ const ProductManagement = () => {
           </TableHeader>
           {productData?.data?.length ? (
             <TableBody>
-              {productData?.data?.map((product, idx: number) => (
+              {productData?.data?.map((product: TProduct, idx: number) => (
                 <TableRow key={product._id}>
                   <TableCell className="font-medium">{idx + 1}</TableCell>
                   <TableCell>

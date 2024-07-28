@@ -37,8 +37,8 @@ const Cart = () => {
 
   // update quantity
   const handleQuantityChange = (productId: string, newQuantity: number) => {
-    const availableStock = getProductStock(productId, productData);
-    if (newQuantity < 0 || newQuantity > availableStock) return; // Prevent negative or overstock quantities
+    const availableStock = getProductStock(productId, productData?.data);
+    if (newQuantity < 1 || newQuantity > availableStock) return; // Prevent negative or overstock quantities
     const newQuantities = productList.map((product, idx) => {
       if (product.productId === productId) {
         return newQuantity;
@@ -111,7 +111,7 @@ const Cart = () => {
                                 quantities[idx] - 1
                               )
                             }
-                            disabled={quantities[idx] <= 0}
+                            disabled={quantities[idx] <= 1}
                           >
                             <TiMinus />
                           </Button>
@@ -137,7 +137,7 @@ const Cart = () => {
                             }
                             disabled={
                               quantities[idx] >=
-                              getProductStock(product.productId, productData)
+                              getProductStock(product.productId, productData?.data)
                             }
                           >
                             <TiPlus />

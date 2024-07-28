@@ -3,7 +3,7 @@ import { CgGym } from "react-icons/cg";
 const HomeBenefits = () => {
   return (
     <section
-      className="container mx-auto px-4 lg:px-10 xxl:px-0 mb-20"
+      className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-10 mb-10"
       data-aos="fade-up"
       data-aos-easing="ease-out-cubic"
       data-aos-duration="1000"

@@ -17,6 +17,7 @@ const Checkout = () => {
   );
   const [placeOrder, { isLoading }] = usePlaceOrderMutation();
 
+  // create order's array of object
   const orderList =
     orderedProducts && orderedProducts.length > 0
       ? orderedProducts.map((item) => ({
@@ -33,7 +34,8 @@ const Checkout = () => {
         }, 0)
       : 0;
 
-  const handleSubmit = (e: FormEvent) => {
+  // create and send ordered list
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
@@ -50,10 +52,14 @@ const Checkout = () => {
           totalCost: grandTotal,
           paymentMethod: formData.get("payment") as string,
         };
-        placeOrder(newOrder);
-        navigate("/checkout-successful", { replace: true });
-        reduxDispatch(clearProductCart());
-        toast.success("Order has been placed.");
+        try {
+          await placeOrder(newOrder).unwrap();
+          reduxDispatch(clearProductCart());
+          toast.success("Order has been placed.");
+          navigate("/checkout-successful", { replace: true });
+        } catch (error) {
+          toast.error("Failed to place the order. Please try again.");
+        }
       }
     }
   };

@@ -3,7 +3,7 @@ import gymActivity from "../../../src/assets/aboutus/lottie_animation/gym.json";
 
 const AboutUsHero = () => {
   return (
-    <section className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-10 lg:pt-32 mb-20 md:mb-28">
+    <section className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-10 lg:pt-32 mb-10 md:mb-18">
       <div className="grid md:grid-cols-2 items-center gap-x-10 gap-y-6">
         <div className="h-full bg-gray-100 rounded-md md:rounded-none md:rounded-tl-[100px] md:rounded-br-[100px] p-3">
           <Lottie animationData={gymActivity} loop={true} className="h-full" />

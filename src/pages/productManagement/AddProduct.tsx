@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TiPlus } from "react-icons/ti";
 import { Button } from "../../components/ui/button";
 import {
@@ -15,21 +14,13 @@ import { getImageUrl } from "../../utils/getImageUrl";
 import { useAddProductMutation } from "../../redux/api/productApi";
 import { toast } from "sonner";
 import Loading from "../../utils/Loading";
+import {
+  TActionForProduct,
+  TCategory,
+  TInitialStateForProduct,
+} from "../../types";
 
-type TInitialState = {
-  selectedCategory: string;
-  productName: string;
-  productPrice: string;
-  productStock: string;
-  productDescription: string;
-  productImage: null | any;
-};
-type TAction = {
-  type: string;
-  payload: string;
-};
-
-const initialState: TInitialState = {
+const initialState: TInitialStateForProduct = {
   selectedCategory: "",
   productName: "",
   productPrice: "",
@@ -37,7 +28,10 @@ const initialState: TInitialState = {
   productDescription: "",
   productImage: null,
 };
-const reducer = (currentState: TInitialState, action: TAction) => {
+const reducer = (
+  currentState: TInitialStateForProduct,
+  action: TActionForProduct
+) => {
   switch (action.type) {
     case "addCategory":
       return { ...currentState, selectedCategory: action.payload };
@@ -56,11 +50,15 @@ const reducer = (currentState: TInitialState, action: TAction) => {
   }
 };
 
-const AddProduct = ({ categoryData }) => {
+const AddProduct = ({ categoryData }: { categoryData: TCategory[] }) => {
+  // create reducer
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [isFormValid, setIsFormValid] = useState(false);
+  // from redux to create product
   const [addProduct, { isLoading }] = useAddProductMutation();
+  // disable/enable submit button by formValid
+  const [isFormValid, setIsFormValid] = useState(false);
 
+  // control the formValid
   useEffect(() => {
     state.selectedCategory &&
     state.productName &&
@@ -72,9 +70,9 @@ const AddProduct = ({ categoryData }) => {
       : setIsFormValid(false);
   }, [state]);
 
+  // create product
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
     getImageUrl(state.productImage).then((imageUrl) => {
       const newProduct = {
         category: state.selectedCategory,
@@ -86,13 +84,13 @@ const AddProduct = ({ categoryData }) => {
       };
       addProduct(newProduct);
       toast.success("Product has been added.");
-
-      state.selectedCategory = "";
-      state.productName = "";
-      state.productPrice = "";
-      state.productStock = "";
-      state.productDescription = "";
-      state.productImage = null;
+      // clearing the form
+      dispatch({ type: "addCategory", payload: "" });
+      dispatch({ type: "addName", payload: "" });
+      dispatch({ type: "addPrice", payload: "" });
+      dispatch({ type: "addStock", payload: "" });
+      dispatch({ type: "addDescription", payload: "" });
+      dispatch({ type: "addImage", payload: null });
       setIsFormValid(false);
     });
   };
@@ -130,7 +128,7 @@ const AddProduct = ({ categoryData }) => {
                 className="border py-2 px-2 rounded"
               >
                 <option value="">Select a category</option>
-                {categoryData?.map((category) => (
+                {categoryData?.map((category: TCategory) => (
                   <option key={category?._id} value={category?._id}>
                     {category?.name}
                   </option>
@@ -195,9 +193,10 @@ const AddProduct = ({ categoryData }) => {
                 id="image"
                 placeholder="Enter product description"
                 className="border py-2 px-2 rounded"
-                onChange={(e) =>
-                  dispatch({ type: "addImage", payload: e.target.files[0] })
-                }
+                onChange={(e) => {
+                  const file = e.target.files?.[0] || null;
+                  dispatch({ type: "addImage", payload: file });
+                }}
                 required
               />
             </div>

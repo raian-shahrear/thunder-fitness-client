@@ -4,14 +4,17 @@ import { useGetAllProductsQuery } from "../../redux/api/productApi";
 import { FaArrowRight } from "react-icons/fa6";
 import defaultImage from "../../assets/default_image.jpg";
 import Loading from "../../utils/Loading";
+import { TProduct } from "../../types";
 
 const HomeFeaturedProducts = () => {
   const navigate = useNavigate();
   const { data: productData, isLoading } = useGetAllProductsQuery(undefined);
+  // create an array with the featured products 
   const featuredProductData = productData?.data.filter(
-    (product) => product.isFeaturedProduct === true
+    (product: TProduct) => product.isFeaturedProduct === true
   );
 
+  // navigate to product details page
   const handleDetails = (dataId: string) => {
     navigate(`/products/${dataId}`, { state: dataId });
   };
@@ -24,7 +27,7 @@ const HomeFeaturedProducts = () => {
     <>
       {featuredProductData?.length && (
         <section
-          className="container mx-auto px-4 lg:px-10 xxl:px-0 mb-20"
+          className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-10 mb-10"
           data-aos="fade-up"
           data-aos-easing="ease-out-cubic"
           data-aos-duration="1000"
@@ -33,7 +36,7 @@ const HomeFeaturedProducts = () => {
             Our Best Sellers
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredProductData.map((product) => (
+            {featuredProductData.map((product: TProduct) => (
               <div
                 key={product?._id}
                 className="shadow-lg rounded-tl-md rounded-tr-md"

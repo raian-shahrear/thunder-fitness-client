@@ -1,6 +1,6 @@
 const HomeHero = () => {
   return (
-    <section className="relative w-full h-screen lg:h-[800px] mb-20">
+    <section className="relative w-full h-screen lg:h-[800px] mb-10">
       <img
         src="../../../src/assets/home/hero.jpg"
         alt="hero"

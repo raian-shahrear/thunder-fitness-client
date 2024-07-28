@@ -1,29 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, A11y } from "swiper/modules";
-
-const clientReviews = [
-  {
-    _id: "01",
-    img: "../../../src/assets/aboutus/client/Jhon.jpg",
-    name: "Jhon Killer",
-    review:
-      "Thunder Fitness exceeded my expectations! The equipment is top-notch and built to last. Their customer service was incredibly helpful, ensuring I got exactly what I needed for my home gym. Highly recommend!",
-  },
-  {
-    _id: "02",
-    img: "../../../src/assets/aboutus/client/Sam.jpg",
-    name: "Sam Board",
-    review:
-      "I've been a loyal Thunder Fitness customer for years. Their products are consistently high-quality, and their team is always responsive and knowledgeable. They make staying fit at home easier than ever!",
-  },
-  {
-    _id: "03",
-    img: "../../../src/assets/aboutus/client/Toya.jpg",
-    name: "Toya Lopez",
-    review:
-      "Fantastic experience with Thunder Fitness! The gear is durable and performs perfectly. The support team answered all my questions quickly. I’m thrilled with my purchase and the overall service!",
-  },
-];
+import { clientReviews } from "./aboutUs.const";
 
 const swiperSlideBreakpoints = {
   320: {
@@ -43,7 +20,7 @@ const swiperSlideBreakpoints = {
 const AboutUsClientReview = () => {
   return (
     <section
-      className="container mx-auto px-4 lg:px-10 xxl:px-0 mb-8"
+      className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-10 mb-4"
       data-aos="fade-left"
       data-aos-easing="ease-out-cubic"
       data-aos-duration="1000"

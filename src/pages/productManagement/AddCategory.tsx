@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TiPlus } from "react-icons/ti";
 import { Button } from "../../components/ui/button";
 import {
@@ -15,21 +14,16 @@ import { getImageUrl } from "../../utils/getImageUrl";
 import { useAddCategoryMutation } from "../../redux/api/categoryApi";
 import Loading from "../../utils/Loading";
 import { toast } from "sonner";
+import { TActionForCategory, TInitialStateForCategory } from "../../types";
 
-type TInitialState = {
-  categoryName: string;
-  categoryImage: null | any;
-};
-type TAction = {
-  type: string;
-  payload: string;
-};
-
-const initialState: TInitialState = {
+const initialState: TInitialStateForCategory = {
   categoryName: "",
   categoryImage: null,
 };
-const reducer = (currentState: TInitialState, action: TAction) => {
+const reducer = (
+  currentState: TInitialStateForCategory,
+  action: TActionForCategory
+) => {
   switch (action.type) {
     case "addName":
       return { ...currentState, categoryName: action.payload };
@@ -41,29 +35,31 @@ const reducer = (currentState: TInitialState, action: TAction) => {
 };
 
 const AddCategory = () => {
+  // create reducer
   const [state, dispatch] = useReducer(reducer, initialState);
+  // from redux to create category
   const [addCategory, { isLoading }] = useAddCategoryMutation();
+  // disable/enable submit button by formValid
   const [isFormValid, setIsFormValid] = useState(false);
 
+  // control the formValid
   useEffect(() => {
-    state.categoryImage &&
-    state.categoryName
+    state.categoryImage && state.categoryName
       ? setIsFormValid(true)
       : setIsFormValid(false);
   }, [state]);
 
+  // create category
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
     getImageUrl(state.categoryImage).then((imageUrl) => {
       const newCategory = {
         name: state.categoryName,
         image: imageUrl,
       };
-
       addCategory(newCategory);
       toast.success("Category has been added!");
-
+      // clearing the form
       state.categoryName = "";
       state.categoryImage = null;
       setIsFormValid(false);
@@ -116,16 +112,19 @@ const AddCategory = () => {
                 id="image"
                 placeholder="Enter product description"
                 className="border py-2 px-2 rounded"
-                onChange={(e) =>
-                  dispatch({ type: "addImage", payload: e.target.files[0] })
-                }
+                onChange={(e) => {
+                  const file = e.target.files?.[0] || null;
+                  dispatch({ type: "addImage", payload: file });
+                }}
                 required
               />
             </div>
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="submit" disabled={!isFormValid}>Submit</Button>
+              <Button type="submit" disabled={!isFormValid}>
+                Submit
+              </Button>
             </DialogClose>
           </DialogFooter>
         </form>

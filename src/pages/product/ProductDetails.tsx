@@ -12,10 +12,13 @@ import { addToCart } from "../../redux/features/productCart/productCartSlice";
 import { toast } from "sonner";
 import defaultImage from "../../assets/default_image.jpg";
 import Loading from "../../utils/Loading";
+import { TProduct } from "../../types";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
+  // get product id from diff components
   const { state: productId } = useLocation();
+  // find product details by using productId
   const { data: productData, isLoading } = useGetSingleProductQuery(productId);
   const reduxDispatch = useAppDispatch();
   const [quantityCount, setQuantityCount] = useState(1);
@@ -24,7 +27,7 @@ const ProductDetails = () => {
   const { data: productDataByCategory, isLoading: isLoadingCategoryProduct } =
     useGetProductsByCategoryQuery(productData?.data?.category?._id);
   const viewCategoryProduct = productDataByCategory?.data.filter(
-    (product) => product?._id !== productId
+    (product: TProduct) => product?._id !== productId
   );
   // navigate to product details page
   const handleDetails = (dataId: string) => {
@@ -32,7 +35,7 @@ const ProductDetails = () => {
   };
 
   // add to cart
-  const handleAddToCart = (data, qty: number) => {
+  const handleAddToCart = (data: TProduct, qty: number) => {
     const orderedProduct = {
       productId: data._id,
       productName: data.name,
@@ -40,10 +43,8 @@ const ProductDetails = () => {
       quantity: qty,
     };
     reduxDispatch(addToCart(orderedProduct));
-    toast.success("Product has been added to the cart.")
+    toast.success("Product has been added to the cart.");
   };
-
-console.log(productData?.data?.stock)
 
   if (isLoading || isLoadingCategoryProduct) {
     return <Loading />;
@@ -52,10 +53,14 @@ console.log(productData?.data?.stock)
     <>
       <div className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-20 lg:pt-32 min-h-[65vh]">
         {productData?.data ? (
-          <section className="mb-20 grid md:grid-cols-2 gap-x-10 gap-y-6">
+          <section className="mb-10 grid md:grid-cols-2 gap-x-10 gap-y-6">
             <div>
               <img
-                src={productData?.data?.image ? productData?.data?.image : defaultImage}
+                src={
+                  productData?.data?.image
+                    ? productData?.data?.image
+                    : defaultImage
+                }
                 alt="gym product"
                 className="w-full h-full object-cover object-center rounded-md"
               />
@@ -122,12 +127,12 @@ console.log(productData?.data?.stock)
             <p className="font-bold text-4xl text-gray-300">No Product Found</p>
           </div>
         )}
-        <section className="mb-20">
+        <section className="pt-10 mb-10">
           <h2 className="text-start text-2xl font-bold text-gray-900 border-b pb-3 mb-10">
             You May Also Like
           </h2>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {viewCategoryProduct?.map((product) => (
+            {viewCategoryProduct?.map((product: TProduct) => (
               <div key={product?._id}>
                 <button onClick={() => handleDetails(product?._id)}>
                   <img

@@ -3,7 +3,7 @@ import { BiWorld } from "react-icons/bi";
 
 const AboutUsMissionVision = () => {
   return (
-    <section className="container mx-auto px-4 lg:px-10 xxl:px-0 mb-20">
+    <section className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-10 mb-10">
       <div className="grid md:grid-cols-2 items-center gap-x-10 gap-y-6">
         <div className="text-center bg-gray-900 rounded-md p-5 shadow-lg">
           <span className="bg-red-300 inline-block text-gray-900 p-2 text-5xl rounded-full shadow-lg shadow-gray-900 mb-2 md:mt-[-50px]">

@@ -1,69 +1,53 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../../components/ui/button";
 import { useState } from "react";
-import Select from "react-select";
-import { FaArrowRotateLeft } from "react-icons/fa6";
 import { useGetAllProductsQuery } from "../../redux/api/productApi";
 import { useGetAllCategoriesQuery } from "../../redux/api/categoryApi";
 import defaultImage from "../../assets/default_image.jpg";
 import Loading from "../../utils/Loading";
+import { TCategory, TCategoryOption, TProduct } from "../../types";
+import ProductsFilter from "./ProductsFilter";
+import { productFilterFun } from "./product.utils";
 
 const Products = () => {
   const navigate = useNavigate();
+  // get category info from diff components for filtering
   const { state: selectedCategory } = useLocation();
 
-  // show category for select
+  // get all categories for select
   const { data: categoryData, isLoading: isLoadingCategory } =
     useGetAllCategoriesQuery(undefined);
-  const categoryOptions = categoryData?.data?.map((option) => ({
-    value: option?._id,
-    label: option?.name,
-  }));
+  // create category array as per react-select
+  const categoryOptions: TCategoryOption[] = categoryData?.data?.map(
+    (option: TCategory) => ({
+      value: option?._id,
+      label: option?.name,
+    })
+  );
 
   // search/filter
   const [search, setSearch] = useState("");
-  const [filterByCategory, setFilterByCategory] = useState([
-    selectedCategory && {
-      value: selectedCategory?._id,
-      label: selectedCategory?.name,
-    },
-  ]);
+  const [filterByCategory, setFilterByCategory] = useState<TCategoryOption[]>(
+    selectedCategory
+      ? [{ value: selectedCategory?._id, label: selectedCategory?.name }]
+      : []
+  );
   const [filterByMinPrice, setFilterByMinPrice] = useState("");
   const [filterByMaxPrice, setFilterByMaxPrice] = useState("");
   const [sortByPrice, setSortByPrice] = useState("");
 
-  const filterObj: {
-    searchTerm?: string;
-    categories?: string;
-    minPrice?: number;
-    maxPrice?: number;
-    sort?: string;
-  } = {};
-  if (search) {
-    filterObj.searchTerm = search;
-  }
-  if (filterByCategory.length && filterByCategory[0] !== null) {
-    filterObj.categories = filterByCategory.map((val) => val.value).join(",");
-  }
-  if (filterByMinPrice) {
-    filterObj.minPrice = parseFloat(filterByMinPrice);
-  }
-  if (filterByMaxPrice) {
-    filterObj.maxPrice = parseFloat(filterByMaxPrice);
-  }
-  if (sortByPrice) {
-    filterObj.sort = sortByPrice;
-  }
+  // get filter data from the utility
+  const filterObj = productFilterFun(
+    search,
+    filterByCategory,
+    filterByMinPrice,
+    filterByMaxPrice,
+    sortByPrice
+  );
+  // get all product data by using filter data
   const { data: productData, isLoading } = useGetAllProductsQuery(filterObj);
 
-  const handleAllFilterToReset = () => {
-    setSearch("");
-    setFilterByCategory([]);
-    setFilterByMinPrice("");
-    setFilterByMaxPrice("");
-    setSortByPrice("");
-  };
-
+  // navigate to product details page
   const handleDetails = (dataId: string) => {
     navigate(`/products/${dataId}`, { state: dataId });
   };
@@ -74,80 +58,26 @@ const Products = () => {
 
   return (
     <div className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-20 lg:pt-32 min-h-[65vh]">
-      <section className="mb-20">
-        <form className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1fr_96px] gap-2">
-          <div>
-            <input
-              type="text"
-              name="search"
-              id="search"
-              className="border border-gray-300 w-full h-fit px-2 py-2 text-sm rounded-sm placeholder:text-black outline-none"
-              placeholder="Search by name"
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-          <div className="flex gap-2">
-            <input
-              type="number"
-              name="minPrice"
-              className="border border-gray-300 w-full h-fit px-2 py-2 text-sm rounded-sm placeholder:text-black outline-none"
-              placeholder="Min Price"
-              onChange={(e) => setFilterByMinPrice(e.target.value)}
-            />
-            <input
-              type="number"
-              name="maxPrice"
-              className="border border-gray-300 w-full h-fit px-2 py-2 text-sm rounded-sm placeholder:text-black outline-none"
-              placeholder="Max Price"
-              onChange={(e) => setFilterByMaxPrice(e.target.value)}
-            />
-          </div>
-          <div>
-            <select
-              name="sorting"
-              id="sorting"
-              className="border border-gray-300 w-full px-2 py-2 text-sm rounded-sm"
-              onChange={(e) => setSortByPrice(e.target.value)}
-            >
-              <option value="">Sort by price</option>
-              <option value="-price">High Price</option>
-              <option value="price">Low Price</option>
-            </select>
-          </div>
-          <div>
-            <Select
-              value={filterByCategory}
-              isMulti
-              name="categories"
-              options={categoryOptions}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              placeholder="Select categories"
-              onChange={(selectedOptions) =>
-                setFilterByCategory(selectedOptions)
-              }
-            />
-          </div>
-          <Button
-            type="reset"
-            className="py-2 w-24 h-fit rounded"
-            onClick={handleAllFilterToReset}
-          >
-            <FaArrowRotateLeft /> <span className="ml-2">Reset</span>
-          </Button>
-        </form>
-      </section>
+      <ProductsFilter
+        categoryOptions={categoryOptions}
+        setSearch={setSearch}
+        setFilterByCategory={setFilterByCategory}
+        setFilterByMinPrice={setFilterByMinPrice}
+        setFilterByMaxPrice={setFilterByMaxPrice}
+        setSortByPrice={setSortByPrice}
+        filterByCategory={filterByCategory}
+      />
       {productData?.data?.length ? (
-        <section className="mb-20">
+        <section className="pt-5 mb-10">
           <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-10">
             {productData?.success &&
-              productData?.data?.map((product) => (
+              productData?.data?.map((product: TProduct) => (
                 <div key={product?._id} className="grid grid-cols-2 gap-6">
                   <div>
                     <img
                       src={product?.image ? product?.image : defaultImage}
                       alt="gym product"
-                      className="w-full h-full object-cover object-center"
+                      className="w-full h-full object-cover object-center rounded-md"
                     />
                   </div>
                   <div>

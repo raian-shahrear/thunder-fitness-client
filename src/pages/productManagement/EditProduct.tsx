@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormEvent, useReducer } from "react";
 import { Button } from "../../components/ui/button";
 import {
@@ -15,30 +14,32 @@ import { getImageUrl } from "../../utils/getImageUrl";
 import { useUpdateProductMutation } from "../../redux/api/productApi";
 import Loading from "../../utils/Loading";
 import { toast } from "sonner";
+import {
+  TActionForProduct,
+  TCategory,
+  TInitialStateForProduct,
+  TProduct,
+} from "../../types";
 
-type TInitialState = {
-  selectedCategory: string;
-  productName: string;
-  productPrice: string;
-  productStock: string;
-  productDescription: string;
-  productImage: any | string;
-};
-type TAction = {
-  type: string;
-  payload: string;
-};
-
-const EditProduct = ({ item, categoryData }) => {
-  const initialState: TInitialState = {
+const EditProduct = ({
+  item,
+  categoryData,
+}: {
+  item: TProduct;
+  categoryData: TCategory[];
+}) => {
+  const initialState: TInitialStateForProduct = {
     selectedCategory: item.category._id,
     productName: item.name,
-    productPrice: item.price,
-    productStock: item.stock,
+    productPrice: item.price.toString(),
+    productStock: item.stock.toString(),
     productDescription: item.description,
     productImage: item.image,
   };
-  const reducer = (currentState: TInitialState, action: TAction) => {
+  const reducer = (
+    currentState: TInitialStateForProduct,
+    action: TActionForProduct
+  ) => {
     switch (action.type) {
       case "addCategory":
         return { ...currentState, selectedCategory: action.payload };
@@ -56,17 +57,18 @@ const EditProduct = ({ item, categoryData }) => {
         return currentState;
     }
   };
+  // create reducer
   const [state, dispatch] = useReducer(reducer, initialState);
+  // from redux to update product
   const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
+  // update product
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     let imageUrl = state.productImage;
-
     if (state.productImage instanceof File) {
       imageUrl = await getImageUrl(state.productImage);
     }
-
     const newProduct = {
       id: item._id,
       data: {
@@ -76,11 +78,10 @@ const EditProduct = ({ item, categoryData }) => {
         price: parseFloat(state.productPrice),
         stock: parseInt(state.productStock),
         image: imageUrl,
-      }
+      },
     };
-
     await updateProduct(newProduct);
-    toast.success("Product has been edited.")
+    toast.success("Product has been edited.");
   };
 
   if (isLoading) {
@@ -179,9 +180,10 @@ const EditProduct = ({ item, categoryData }) => {
                 id="image"
                 placeholder="Enter product description"
                 className="border py-2 px-2 rounded"
-                onChange={(e) =>
-                  dispatch({ type: "addImage", payload: e.target.files[0] })
-                }
+                onChange={(e) => {
+                  const file = e.target.files?.[0] || null;
+                  dispatch({ type: "addImage", payload: file });
+                }}
               />
             </div>
             <div className="flex flex-col gap-2">
