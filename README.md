@@ -20,7 +20,7 @@ This eCommerce site has various features, means functionalities. In the Home pag
 ## Installation Guideline
 - First install the React App with Vite and select Typescript there.
 - Install Redux, TailwindCSS, Shadcn, React-router and other required npm packages.
-- Run the App by "npm run dev"
+- Run the App by `npm run dev`
 - Create require pages and connect them with the Router to navigate.
 - Implement Redux Store and RTK Query.
 
@@ -28,7 +28,7 @@ This eCommerce site has various features, means functionalities. In the Home pag
 - Must have a backend for managing the App data dynamically through API.
 
 ### Installation Steps
-1. Create React app with Vite by "npm create vite@latest".
+1. Create React app with Vite by `npm create vite@latest`.
 2. Install the required npm package where TailwindCSS & Shadcn for managing CSS, Redux for state management, React-router for routing and there are also others for carousel slider, toast, animation.
 3. Under the src folder there are some folder for specific purpose like assets, components, config, hooks, pages, redux, routes, types, styles and utils.
 4. Implement Redux Store & RTK Query for managing local state and API by following [Redux-toolkit Doc](https://redux-toolkit.js.org/tutorials/quick-start)
