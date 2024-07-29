@@ -38,7 +38,7 @@ const Products = () => {
   const [sortByPrice, setSortByPrice] = useState("");
 
   // Use the debounce hook with a delay of 300ms
-  const debouncedSearch = useDebounce(search, 500);
+  const debouncedSearch = useDebounce(search, 300);
 
   // get filter data from the utility
   const filterObj = productFilterFun(

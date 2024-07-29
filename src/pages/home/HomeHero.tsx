@@ -1,8 +1,10 @@
+import heroImg from "@/assets/home/hero.jpg";
+
 const HomeHero = () => {
   return (
     <section className="relative w-full h-screen lg:h-[800px] mb-10">
       <img
-        src="../../../src/assets/home/hero.jpg"
+        src={heroImg}
         alt="hero"
         className="w-full h-full object-cover object-top"
       />

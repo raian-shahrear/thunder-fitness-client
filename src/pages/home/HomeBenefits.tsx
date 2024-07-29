@@ -1,4 +1,5 @@
 import { CgGym } from "react-icons/cg";
+import benefitImg from "@/assets/home/benefits.jpg";
 
 const HomeBenefits = () => {
   return (
@@ -11,7 +12,7 @@ const HomeBenefits = () => {
       <div className="grid md:grid-cols-2 gap-x-10 gap-y-6">
         <div>
           <img
-            src="../../../src/assets/home/benefits.jpg"
+            src={benefitImg}
             alt="benefits"
             className="w-full h-full object-cover object-center rounded-md"
           />

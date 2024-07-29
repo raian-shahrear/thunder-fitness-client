@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import gymActivity from "../../../src/assets/aboutus/lottie_animation/gym.json";
+import gymActivity from "@/assets/aboutus/lottie_animation/gym.json";
 
 const AboutUsHero = () => {
   return (
