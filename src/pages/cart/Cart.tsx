@@ -64,15 +64,19 @@ const Cart = () => {
   };
 
   // navigate to checkout
-  const handleCheckout = ()=>{
-    const isConfirmed = confirm("Are you sure to checkout?"); 
-    if(isConfirmed){
+  const handleCheckout = () => {
+    const isConfirmed = confirm("Are you sure to checkout?");
+    if (isConfirmed) {
       navigate("/checkout");
     }
-  }
+  };
 
   if (isLoading) {
-    return <Loading />;
+    return (
+      <div className="min-h-[65vh] relative">
+        <Loading />
+      </div>
+    );
   }
 
   return (
@@ -137,7 +141,10 @@ const Cart = () => {
                             }
                             disabled={
                               quantities[idx] >=
-                              getProductStock(product.productId, productData?.data)
+                              getProductStock(
+                                product.productId,
+                                productData?.data
+                              )
                             }
                           >
                             <TiPlus />
@@ -171,7 +178,10 @@ const Cart = () => {
             </Table>
           </section>
           <div className="flex justify-center">
-            <Button className="bg-red-300 text-gray-900 h-fit py-2 px-3 rounded transition-all duration-300 hover:bg-gray-900 hover:text-white" onClick={handleCheckout}>
+            <Button
+              className="bg-red-300 text-gray-900 h-fit py-2 px-3 rounded transition-all duration-300 hover:bg-gray-900 hover:text-white"
+              onClick={handleCheckout}
+            >
               <span className="mr-2">Checkout</span> <FaArrowRight />
             </Button>
           </div>

@@ -14,7 +14,11 @@ const HomeCategory = () => {
   };
 
   if (isLoading) {
-    return <Loading />;
+    return (
+      <div className="relative">
+        <Loading />
+      </div>
+    );
   }
 
   return (

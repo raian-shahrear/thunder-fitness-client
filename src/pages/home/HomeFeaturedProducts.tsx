@@ -9,7 +9,7 @@ import { TProduct } from "../../types";
 const HomeFeaturedProducts = () => {
   const navigate = useNavigate();
   const { data: productData, isLoading } = useGetAllProductsQuery(undefined);
-  // create an array with the featured products 
+  // create an array with the featured products
   const featuredProductData = productData?.data.filter(
     (product: TProduct) => product.isFeaturedProduct === true
   );
@@ -20,7 +20,11 @@ const HomeFeaturedProducts = () => {
   };
 
   if (isLoading) {
-    return <Loading />;
+    return (
+      <div className="relative">
+        <Loading />
+      </div>
+    );
   }
 
   return (

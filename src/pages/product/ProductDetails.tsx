@@ -47,7 +47,11 @@ const ProductDetails = () => {
   };
 
   if (isLoading || isLoadingCategoryProduct) {
-    return <Loading />;
+    return (
+      <div className="min-h-[65vh] relative">
+        <Loading />
+      </div>
+    );
   }
   return (
     <>

@@ -58,7 +58,11 @@ const ProductManagement = () => {
   };
 
   if (isLoading || isLoadingCategory || isUpdating) {
-    return <Loading />;
+    return (
+      <div className="min-h-[65vh] relative">
+        <Loading />
+      </div>
+    );
   }
   return (
     <div className="container mx-auto px-4 lg:px-10 xxl:px-0 pt-20 lg:pt-32 min-h-[65vh] mb-10">

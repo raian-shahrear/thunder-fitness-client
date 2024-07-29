@@ -57,7 +57,11 @@ const Products = () => {
   };
 
   if (isLoading || isLoadingCategory) {
-    return <Loading />;
+    return (
+      <div className="min-h-[65vh] relative">
+        <Loading />
+      </div>
+    );
   }
 
   return (

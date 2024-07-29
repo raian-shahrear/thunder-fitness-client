@@ -6,17 +6,13 @@ import HomeHero from "./HomeHero";
 
 const Home = () => {
   return (
-    <div>
+    <>
       <HomeHero />
-      <div className="relative">
-        <HomeCategory />
-      </div>
-      <div className="relative">
-        <HomeFeaturedProducts />
-      </div>
+      <HomeCategory />
+      <HomeFeaturedProducts />
       <HomeBenefits />
       <HomeGallery />
-    </div>
+    </>
   );
 };
 
